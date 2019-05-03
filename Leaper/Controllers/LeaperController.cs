@@ -8,7 +8,7 @@ namespace Leaper.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class LeaperController : ControllerBase
     {
         // GET api/values
         [HttpGet]
