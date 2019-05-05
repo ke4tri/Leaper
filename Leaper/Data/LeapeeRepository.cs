@@ -30,5 +30,15 @@ namespace Leap.Data
 
             throw new Exception("No leapee created");
         }
+
+        public IEnumerable<Leapee> GetAll()
+        {
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var leapees = db.Query<Leapee>("Select * from Leapee").ToList();
+
+                return leapees;
+            }
+        }
     }
 }

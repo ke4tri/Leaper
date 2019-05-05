@@ -33,5 +33,12 @@ namespace Leap.Controllers
 
             return Created($"api/leapee/{newLeaper.Id}", newLeaper);
         }
+
+        [HttpGet]
+        public ActionResult GetAllUsers()
+        {
+            var users = _leapeeRepository.GetAll();
+            return Ok(users);
+        }
     }
 }
