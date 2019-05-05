@@ -2,44 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Leap.Data;
+using Leap.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Leaper.Controllers
+
+namespace QuantamLeap.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class LeaperController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        readonly LeaperRepository _leaperRepository;
+
+        public LeaperController()
         {
-            return new string[] { "value1", "value2" };
+            _leaperRepository = new LeaperRepository();
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpPost("register")]
+
+        public ActionResult<int> AddLeaper(CreateLeaperRequest createRequest)
         {
-            return "value";
+            //if (!_validator.Validate(createRequest))
+            //{
+            //    return BadRequest(new { error = "leapers must have a first name, last name, and target leap" });
+            //}
+
+            var newLeaper = _leaperRepository.AddLeaper(createRequest.FirstName, createRequest.LastName, createRequest.TargetLeap);
+
+            return Created($"api/leaper/{newLeaper.Id}", newLeaper);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
